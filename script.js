@@ -1,42 +1,66 @@
-var molberts = document.getElementById("mansKanvas");
-var konteksts = molberts.getContext("2d");
+window.addEventListener("load", () =>{
+
+var painting = document.getElementById("myCanvas");
+var c = painting.getContext("2d");
 
 /*
-//x=0 y=0 
-konteksts.moveTo(0,0);
-//x=100 y=50
-konteksts.lineTo(100,50);
-//taisit liniju
-konteksts.stroke();
+//x=0 y=0 coordinates
+c.moveTo(0,0);
+//x=100 y=50 coordinates
+c.lineTo(100,50);
+//draw line
+c.stroke();
 
 
-//Mara linija
+// preview how to draw a cline line
 //x=0 y=100
-konteksts.moveTo(0,100);
+c.moveTo(0,100);
 //x=100 y=0
-konteksts.lineTo(100,0);
-konteksts.stroke();
+c.lineTo(100,0);
+c.stroke();
 
 */
 
-//Mara aplitis
-//zimet apli kuram centrs atrodas kanvasa centra x=50 y=50
-//radiuss 50px
+//circle
+//draw circle with center click any where in canvas
+//radius deffined 40px
 //------------------------------------------------
-var xHoriz = 50;
-var yVert = 50;
-var radiusApl = 40;
-
-konteksts.arc(xHoriz,yVert,radiusApl,0,2*Math.PI);
-konteksts.stroke();
 
 
-//Kaspara linija = mara apla radiuss
-//saakuma koordinates x,y=50 ,beigu koordianates x=100,y=50
-var xRadSakums = 50 + radiusApl;
-//beigu koordinates horizontalai linijai ir atkarigas no sakuma x un radiusa sakuma x vienads + radiusa gar
-var xRadBeig = xHoriz + radiusApl;
+function drawCircle(e){
 
-konteksts.moveTo(xHoriz,yVert);
-konteksts.lineTo(xRadBeig,yVert);
-konteksts.stroke();
+//draw backgr rectangle with white fill corresponding canvas width and height
+c.beginPath();
+c.fillStyle = "white";
+c.fillRect(0,0,200,200);
+c.fill();
+
+//make a click in canvas, and define value of radius
+let xHoriz = e.clientX;
+let yVert = e.clientY;
+let radiusCircle = 40;
+
+c.beginPath();
+c.arc(xHoriz,yVert,radiusCircle,0,2*Math.PI);
+c.stroke();
+
+
+// line is its circles radius visually painted, calculated like this
+//begining coordinates x,y=50 ,end x=100,y=50
+let xRadStart = xHoriz;
+//end coordinates for horizontal line are dependent on clicking x coordinates plus the previously defined rdius.
+let xRadEnd = xHoriz + radiusCircle;
+
+//draw line
+c.beginPath();
+c.moveTo(xRadStart,yVert);
+c.lineTo(xRadEnd,yVert);
+c.stroke();
+
+};
+
+//add event listener for mouseclick or touch screen 
+painting.addEventListener("mousedown", drawCircle);
+
+
+});
